@@ -1,0 +1,25 @@
+; VMCInstaller Config File
+
+; OutputDir (Installer Exe file)
+#define OutputExeDir "<%= output_exe_dir %>"
+
+; Information of Ruby package
+;
+;   ex.) "Ruby 1.9.3-p194" (Ruby A.B.C-pDEF)
+;     #define RubyVersion "1.9.3"
+;     #define RubyPatch "194"
+;
+#define RubyVersion "<%= ruby_version %>"
+#define RubyPatch "<%= ruby_patch %>"
+
+; Ruby Root Path
+;
+;   ex.) Package name is "Ruby193-vmc_0.3.18"
+;     #define RubyPath "C:\vmc_installer\package\Ruby193-vmc_0.3.18"
+#define RubyPath "<%= ruby_path %>"
+
+; VMC version
+;
+;   ex.) "VMC 0.3.18" (VMC X.Y.Z);     #define VMCVersion "0.3.18"
+;
+#define VMCVersion "<%= vmc_version %>"
