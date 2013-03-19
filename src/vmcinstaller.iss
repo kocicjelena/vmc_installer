@@ -90,6 +90,7 @@ OutputBaseFilename=vmcinstaller_{#VMCVersion}-r{#RubyVersion}
 [Files]
 Source: {#RubyPath}\*; DestDir: {app}; Excludes: "\unins*"; Flags: recursesubdirs createallsubdirs
 Source: ..\LICENSE; DestDir: {app}
+Source: setrbvars.bat; DestDir: {app}\bin;
 Source: README.txt; DestDir: {app}; Flags: isreadme
 
 [Languages]
