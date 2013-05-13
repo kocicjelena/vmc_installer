@@ -6,7 +6,7 @@ require 'erb'
 
 $ruby_version = "1.9.3"
 $ruby_patch = "392"
-$vmc_version = "0.3.23"
+$cf_version = "1.0.0"
 
 $ruby_file_name = "ruby-#{$ruby_version}-p#{$ruby_patch}-i386-mingw32"
 $ruby_archive_url = "http://rubyforge.org/frs/download.php/76799/#{$ruby_file_name}.7z"
@@ -54,24 +54,24 @@ task :download_ruby do
   end
 end
 
-task :install_vmc => :download_ruby do
+task :install_cf => :download_ruby do
   set_proxy = ""
   if $proxy_enabled
     set_proxy = "set HTTP_PROXY=http://#{$proxy_server}:#{$proxy_port} &&"
   end
 
-  puts "Installing VMC..."
+  puts "Installing CF..."
   FileUtils.chdir(File.join($ruby_path, "bin")) do
-    system("#{set_proxy} gem install vmc --version #{$vmc_version}")
+    system("#{set_proxy} gem install cf --version #{$cf_version}")
   end
 end
 
-task :generate_config => :install_vmc do
+task :generate_config => :install_cf do
   output_exe_dir = File.join(FileUtils.pwd, "build")
   ruby_version = $ruby_version
   ruby_patch = $ruby_patch
   ruby_path = $ruby_path
-  vmc_version = $vmc_version
+  cf_version = $cf_version
 
   config_file = File.join("src", "config.iss")
   open(config_file, "w") do |file|
@@ -80,7 +80,7 @@ task :generate_config => :install_vmc do
 end
 
 task :default => :generate_config  do
-  iss_file = File.join(FileUtils.pwd, "src", "vmcinstaller.iss")
+  iss_file = File.join(FileUtils.pwd, "src", "cfinstaller.iss")
   FileUtils.chdir(File.dirname($inno_setup_command)) do
     system("#{File.basename($inno_setup_command)} \"#{iss_file}\" 2>&1")
   end

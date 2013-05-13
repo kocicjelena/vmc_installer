@@ -1,4 +1,4 @@
-Windows VMC/Ruby Installer Builder
+Windows CF/Ruby Installer Builder
 ==================================
 
 Requirements

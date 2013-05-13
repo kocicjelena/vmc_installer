@@ -1,108 +1,66 @@
-VMC 0.3.23 with Ruby 1.9.3
+CF 1.0.0 with Ruby 1.9.3
 ==========================
 
-The VMware Cloud CLI. This is the command line interface to VMware's Application Platform.
+Getting Started
+  login [EMAIL] Authenticate with the target
+  info          Display information on the current target, user, etc.
+  logout        Log out from the target
+  target [URL]  Set or display the target cloud, organization, and space
 
-Command Line Optoins
---------------------
+Applications
+  app [APP]     Show app information
+  apps          List your applications
 
-    Usage: vmc [options] command [<args>] [command_options]
-    Try 'vmc help [command]' or 'vmc help options' for more information.
-    
-    Currently available vmc commands are:
-    
-      Getting Started
-        target [url]                                 Reports current target or sets a new target
-        login  [email] [--email, --passwd]           Login
-        info                                         System and account information
-    
-      Applications
-        apps                                         List deployed applications
-    
-      Application Creation
-        push [appname]                               Create, push, map, and start a new application
-        push [appname] --path                        Push application from specified path
-        push [appname] --url                         Set the url for the application
-        push [appname] --instances <N>               Set the expected number <N> of instances
-        push [appname] --mem M                       Set the memory reservation for the application
-        push [appname] --runtime RUNTIME             Set the runtime to use for the application
-        push [appname] --debug [MODE]                Push application and start in a debug mode
-        push [appname] --no-start                    Do not auto-start the application
-    
-      Application Operations
-        start <appname> [--debug [MODE]]             Start the application
-        stop  <appname>                              Stop the application
-        restart <appname> [--debug [MODE]]           Restart the application
-        delete <appname>                             Delete the application
-    
-      Application Updates
-        update <appname> [--path,--debug [MODE]]     Update the application bits
-        mem <appname> [memsize]                      Update the memory reservation for an application
-        map <appname> <url>                          Register the application to the url
-        unmap <appname> <url>                        Unregister the application from the url
-        instances <appname> <num|delta>              Scale the application instances up or down
-    
-      Application Information
-        crashes <appname>                            List recent application crashes
-        crashlogs <appname>                          Display log information for crashed applications
-        logs <appname> [--all]                       Display log information for the application
-        files <appname> [path] [--all]               Display directory listing or file download for [path]
-        stats <appname>                              Display resource usage for the application
-        instances <appname>                          List application instances
-    
-      Application Environment
-        env <appname>                                List application environment variables
-        env-add <appname> <variable[=]value>         Add an environment variable to an application
-        env-del <appname> <variable>                 Delete an environment variable to an application
-    
-      Services
-        services                                     Lists of services available and provisioned
-        create-service <service> [--name,--bind]     Create a provisioned service
-        create-service <service> <name>              Create a provisioned service and assign it <name>
-        create-service <service> <name> <app>        Create a provisioned service and assign it <name>, and bind to <app>
-        delete-service [servicename]                 Delete a provisioned service
-        bind-service <servicename> <appname>         Bind a service to an application
-        unbind-service <servicename> <appname>       Unbind service from the application
-        clone-services <src-app> <dest-app>          Clone service bindings from <src-app> application to <dest-app>
-        tunnel <servicename> [--port]                Create a local tunnel to a service
-        tunnel <servicename> <clientcmd>             Create a local tunnel to a service and start a local client
-    
-      Administration
-        user                                         Display user account information
-        passwd                                       Change the password for the current user
-        logout                                       Logs current user out of the target system
-        add-user [--email, --passwd]                 Register a new user (requires admin privileges)
-        delete-user <user>                           Delete a user and all apps and services (requires admin privileges)
-    
-      System
-        runtimes                                     Display the supported runtimes of the target system
-        frameworks                                   Display the recognized frameworks of the target system
-    
-      Micro Cloud Foundry
-        micro status                                 Display Micro Cloud Foundry VM status
-        micro offline                                Configure Micro Cloud Foundry VM for offline mode
-        micro online                                 Configure Micro Cloud Foundry VM for online mode
-          [--vmx file]                               Path to micro.vmx
-          [--vmrun executable]                       Path to vmrun executable
-          [--password cleartext]                     Cleartext password for guest VM vcap user
-          [--save]                                   Save cleartext password in ~/.vmc_micro
-    
-      Misc
-        aliases                                      List aliases
-        alias <alias[=]command>                      Create an alias for a command
-        unalias <alias>                              Remove an alias
-        targets                                      List known targets and associated authorization tokens
-    
-      Help
-        help [command]                               Get general help or help on a specific command
-        help options                                 Get help on available options
+  Management
+    delete APPS...      Delete an application
+    start APPS...       Start an application
+    restart APPS...     Stop and start an application
+    push [NAME]         Push an application, syncing changes if it exists
+    stop APPS...        Stop an application
+    console APP         Open a console connected to your app
 
+Services
+  services              List your services
+  service SERVICE       Show service information
 
+  Management
+    bind-service [SERVICE] [APP]        Bind a service to an application
+    unbind-service [SERVICE] [APP]      Unbind a service from an application
+    create-service [OFFERING] [NAME]    Create a service
+    delete-service [SERVICE]            Delete a service
+    tunnel [INSTANCE] [CLIENT]          Create a local tunnel to a service.
 
-Simple Story (for Ruby apps)
----------------------------
+Organizations
+  create-org [NAME]             Create an organization
+  delete-org [ORGANIZATION]     Delete an organization
+  org [ORGANIZATION]            Show organization information
+  orgs                          List available organizations
 
-    vmc target api.cloudfoundry.com
-    vmc login
-    bundle package
-    vmc push
+Spaces
+  create-space [NAME] [ORGANIZATION]    Create a space in an organization
+  delete-space SPACE                    Delete a space and its contents
+  spaces [ORGANIZATION]                 List spaces in an organization
+  space [SPACE]                         Show space information
+
+Routes
+  delete-route ROUTE    Delete a route
+  routes                List routes in a space
+
+Domains
+  unmap-domain DOMAIN   Unmap a domain from an organization or space
+  map-domain NAME       Map a domain to an organization or space
+  domains [SPACE]       List domains in a space
+
+Options:
+      --[no-]color                 Use colorful output
+      --[no-]script                Shortcut for --quiet and --force
+      --debug                      Print full stack trace (instead of crash log)
+      --http-proxy HTTP_PROXY      Connect though an http proxy server
+      --https-proxy HTTPS_PROXY    Connect though an https proxy server
+  -V, --verbose                    Print extra information
+  -f, --[no-]force                 Skip interaction when possible
+  -h, --help                       Show command usage
+  -m, --manifest FILE              Path to manifest file to use
+  -q, --[no-]quiet                 Simplify output format
+  -t, --trace                      Show API traffic
+  -v, --version                    Print version number

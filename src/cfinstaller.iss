@@ -1,11 +1,11 @@
-; VMCInstaller
+; CFInstaller
 
 ; PRE-CHECK
-; Verify that RubyVersion, RubyPatch, RubyPath and VMCVersion
+; Verify that RubyVersion, RubyPatch, RubyPath and CFVersion
 ; are defined in "config.iss".
 ;
 ; Command Prompt:
-;  iscc vmcinstaller.iss 
+;  iscc cfinstaller.iss 
 ;
 ; Editor:
 ;  Build -> Compile
@@ -29,8 +29,8 @@
   #endif
 #endif
 
-#if Defined(VMCVersion) == 0
-  #error Please provide a VMCVersion level definition edit the "config.iss".
+#if Defined(CFVersion) == 0
+  #error Please provide a CFVersion level definition edit the "config.iss".
 #endif 
 
 #if Defined(InstVersion) == 0
@@ -47,7 +47,7 @@
 #define RubyFullVersion RubyVersion + '-p' + RubyPatch
 
 ; Build Installer details using above values
-#define InstallerName "VMC " + VMCVersion + "-r" + RubyVersion
+#define InstallerName "CF " + CFVersion + "-r" + RubyVersion
 #define InstallerPublisher "Nippon Telegraph and Telephone Corporation"
 
 #define CurrentYear GetDateTimeString('yyyy', '', '')
@@ -60,7 +60,7 @@
 AppName={#InstallerName}
 AppVerName={#InstallerName}
 AppPublisher={#InstallerPublisher}
-AppVersion={#VMCVersion}
+AppVersion={#CFVersion}
 DefaultGroupName={#InstallerName}
 DisableWelcomePage=true
 DisableProgramGroupPage=true
@@ -72,8 +72,8 @@ InternalCompressLevel=ultra64
 VersionInfoCompany={#InstallerPublisher}
 VersionInfoCopyright=(c) {#CurrentYear} {#InstallerPublisher}
 VersionInfoDescription=VMware Cloud Client and Ruby Programming Language for Windows
-VersionInfoTextVersion={#VMCVersion}
-VersionInfoVersion={#VMCVersion}
+VersionInfoTextVersion={#CFVersion}
+VersionInfoVersion={#CFVersion}
 UninstallDisplayIcon={app}\bin\ruby.exe
 PrivilegesRequired=lowest
 ChangesAssociations=yes
@@ -83,9 +83,9 @@ MinVersion=0,5.1.2600
 SignTool=risigntool sign /a /d $q{#InstallerName}$q /du $q{#InstallerHomepage}$q /t $qhttp://timestamp.comodoca.com/authenticode$q $f
 #endif
 
-DefaultDirName={sd}\vmc_{#VMCVersion}-r{#RubyVersion}
+DefaultDirName={sd}\cf_{#CFVersion}-r{#RubyVersion}
 OutputDir={#OutputExeDir}
-OutputBaseFilename=vmcinstaller_{#VMCVersion}-r{#RubyVersion}
+OutputBaseFilename=cfinstaller_{#CFVersion}-r{#RubyVersion}
 
 [Files]
 Source: {#RubyPath}\*; DestDir: {app}; Excludes: "\unins*"; Flags: recursesubdirs createallsubdirs
@@ -245,13 +245,13 @@ function InitializeSetup(): Boolean;
 var
   hWnd: Integer;
 begin
-  if CheckForMutexes('vmcinstaller_{#VMCVersion}-r{#RubyVersion}') then
+  if CheckForMutexes('cfinstaller_{#CFVersion}-r{#RubyVersion}') then
   begin
-    MessageBox(hWnd, 'vmcinstaller_{#VMCVersion}-r{#RubyVersion}.exe is already running.', 'Error', MB_OK or MB_ERROR);
+    MessageBox(hWnd, 'cfinstaller_{#CFVersion}-r{#RubyVersion}.exe is already running.', 'Error', MB_OK or MB_ERROR);
     Result := False;
   end else
   begin
-    CreateMutex('vmcinstaller_{#VMCVersion}-r{#RubyVersion}');
+    CreateMutex('cfinstaller_{#CFVersion}-r{#RubyVersion}');
     Result := True;
   end;
 end;
@@ -309,7 +309,7 @@ begin
 
   InstallInfo := InstallInfo + NewLine;
 
-  InstallInfo := InstallInfo + 'Add VMC executables to your PATH:';
+  InstallInfo := InstallInfo + 'Add CF executables to your PATH:';
   if IsModifyPath then
     InstallInfo := InstallInfo + ' on' + NewLine
   else
@@ -317,7 +317,7 @@ begin
 
   InstallInfo := InstallInfo + NewLine;
 
-  InstallInfo := InstallInfo + 'Associate .rb and .rbw files with this VMC installation:'
+  InstallInfo := InstallInfo + 'Associate .rb and .rbw files with this CF installation:'
   if IsAssociated then
     InstallInfo := InstallInfo + ' on' + NewLine
   else

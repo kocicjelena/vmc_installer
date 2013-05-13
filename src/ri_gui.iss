@@ -1,4 +1,4 @@
-// VMCInstaller Inno Setup GUI Customizations
+// CFInstaller Inno Setup GUI Customizations
 
 const
   ChkBoxBaseY = 95;
@@ -69,9 +69,9 @@ begin
   PathChkBox := TCheckBox.Create(Page);
   PathChkBox.Parent := Page.Surface;
   PathChkBox.State := cbchecked;
-  PathChkBox.Caption := 'Add VMC executables to your PATH';
-  PathChkBox.Hint := 'Select to make this VMC installation available from everywhere.' #13 +
-                     'This may affect existing Ruby or VMC installations.';
+  PathChkBox.Caption := 'Add CF executables to your PATH';
+  PathChkBox.Hint := 'Select to make this CF installation available from everywhere.' #13 +
+                     'This may affect existing Ruby or CF installations.';
   PathChkBox.ShowHint := True;
   PathChkBox.Alignment := taRightJustify;
   PathChkBox.Top := ScaleY(ChkBoxCurrentY);
@@ -83,10 +83,10 @@ begin
   PathExtChkBox := TCheckBox.Create(Page);
   PathExtChkBox.Parent := Page.Surface;
   PathExtChkBox.State := cbchecked;
-  PathExtChkBox.Caption := 'Associate .rb and .rbw files with this VMC installation';
+  PathExtChkBox.Caption := 'Associate .rb and .rbw files with this CF installation';
   PathExtChkBox.Hint := 'Select to enable running your Ruby scripts by double clicking' #13 +
                         'or simply typing the script name at your shell prompt. This may' #13 +
-                        'affect existing Ruby or VMC installations.';
+                        'affect existing Ruby or CF installations.';
   PathExtChkBox.ShowHint := True;
   PathExtChkBox.Alignment := taRightJustify;
   PathExtChkBox.Top := ScaleY(ChkBoxCurrentY);
